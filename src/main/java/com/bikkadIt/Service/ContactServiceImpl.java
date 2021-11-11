@@ -3,6 +3,7 @@ package com.bikkadIt.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bikkadIt.Model.Contact;
@@ -10,7 +11,8 @@ import com.bikkadIt.Ropository.ContactRepository;
 
 @Service
 public class ContactServiceImpl implements ContactServiceI {
-
+    
+	@Autowired
 	private ContactRepository contactRepository;
 	
 	

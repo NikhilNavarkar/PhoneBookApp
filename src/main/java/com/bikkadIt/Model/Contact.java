@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.context.annotation.Configuration;
 
 
 @Entity
@@ -30,10 +31,10 @@ public class Contact {
 	@Column(name="ACTIVE_SW")
 	private Character activeSw;
 	@CreationTimestamp
-    @Column(updatable = false)
+    @Column(name="CREATED_DATE",updatable = false)
 	private LocalDate createdDate;
 	@UpdateTimestamp
-    @Column(insertable = false)
+    @Column(name="UPDATED_DATE",insertable = false)
 	private LocalDate updatedDate;
 	public Integer getContactId() {
 		return contactId;

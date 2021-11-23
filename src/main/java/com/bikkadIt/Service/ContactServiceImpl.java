@@ -18,7 +18,7 @@ public class ContactServiceImpl implements ContactServiceI {
 	
 	@Override
 	public boolean saveContact(Contact contact) {
-		
+		contact.setActiveSw('Y');
 		Contact save=contactRepository.save(contact);
 		if(save !=null && save.getContactId() !=null) {
 			return true;
@@ -49,11 +49,11 @@ public class ContactServiceImpl implements ContactServiceI {
 	@Override
 	public boolean deleteContactById(Integer cid) {
 	boolean status	=contactRepository.existsById(cid);
-	if(status)	
+	if(status)	{
 	contactRepository.deleteById(cid);
-		return false;
+		return true;
 	}
-	
-	
+	return false;
+	}
 
 }

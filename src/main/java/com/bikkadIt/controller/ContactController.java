@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,32 +20,33 @@ public class ContactController {
 	@Autowired
 	private ContactServiceI contactServiceI;
 	
+	@GetMapping("/contact")
+	private String loadContactForm(Model model) {
+		Contact contactobj=new Contact();
+		model.addAttribute("contact",contactobj);
+		return "contactInfo";	
+	}
+
+	
 	@PostMapping("/saveContact")
-	public boolean SaveContact(@RequestBody Contact Contact) {
-	boolean cid=contactServiceI.saveContact(Contact);	
-	return cid;
+	public String saveContact(Contact contact,Model model) {
+        boolean isSaved=contactServiceI.saveContact(contact);
+	    if(isSaved) {
+        	model.addAttribute("success", "contact saved Successfully");
+        }else {
+        	model.addAttribute("error", "Failed to save Contact");
+        }
+         return "contactInfo" ;
+	}
+	
+	@GetMapping("/viewContacts")
+	public String viewAllContacts(Model model) {
+	    List<Contact> allContacts=contactServiceI.getAllContacts();
+	    model.addAttribute("contacts", allContacts)	;
+	    return "contacts";	
 	
 	}
 	
-	@GetMapping("/getAllContact")
-	List<Contact> getAllContact(){
-	List<Contact> list= contactServiceI.getAllContacts();
-    return list;
-		
-	}
 	
-	@GetMapping("/getContactById/{id}")
-    public Contact getContactById(@PathVariable Integer cid) {
-    Contact contact=contactServiceI.getContactById(cid);
-    return contact;
-    
-	}
-    
-    @DeleteMapping("/deleteContactById/{cid}") 
-    public boolean deleteContactById(@PathVariable Integer cid){
-    boolean contact=contactServiceI.deleteContactById(cid);
-    return contact;
-    
-	}
 
 }
